@@ -22,9 +22,12 @@ Requirements
 Network topology
 ----------------
 
+```text
 User ---> SSH Bastion (public IP) ---> Galaxy Instance (private IP)
-              	|
-              	|---- Private Virtual Network (No Public Access)
+               |
+               |---- Private Virtual Network (No Public Access)
+
+```
 
 - Public Access: Only available via Bastion host.
 - Galaxy VM: Deployed entirely within a secure, private network.
