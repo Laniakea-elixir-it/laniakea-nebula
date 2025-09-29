@@ -18,3 +18,13 @@ Requirements
 | Linux VM Image        | Base Linux OS image (e.g., RockyLinux 9.3).               |
 | VM Flavor             | Recommended specs: ≥ 4 CPUs, ≥ 8 GB RAM.                  |
 | Network setup         | Preconfigured private network & Bastion VM.               |
+
+Network topology
+----------------
+
+User ---> SSH Bastion (public IP) ---> Galaxy Instance (private IP)
+              	|
+              	|---- Private Virtual Network (No Public Access)
+
+- Public Access: Only available via Bastion host.
+- Galaxy VM: Deployed entirely within a secure, private network.
