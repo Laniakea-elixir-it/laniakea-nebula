@@ -31,3 +31,8 @@ User ---> SSH Bastion (public IP) ---> Galaxy Instance (private IP)
 
 - Public Access: Only available via Bastion host.
 - Galaxy VM: Deployed entirely within a secure, private network.
+
+Configuration
+-------------
+
+In the ``main.tf`` replace the ``BASTION_PRIVATE_IP`` with the Bastion host’s private IP address, ensuring SSH access only through this host.
