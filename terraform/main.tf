@@ -37,7 +37,7 @@ data "openstack_networking_subnet_v2" "private_subnet" {
 # Security group allowing internal SSH from Bastion only
 resource "openstack_networking_secgroup_v2" "ssh_internal" {
   name    	= "ssh-internal"
-  description = "Allow SSH from Bastion only"
+  description = "[tf] Allow SSH from Bastion only"
 }
 
 # Rule: Allow SSH only from Bastion private IP
@@ -51,13 +51,34 @@ resource "openstack_networking_secgroup_rule_v2" "ssh_from_bastion" {
   security_group_id = openstack_networking_secgroup_v2.ssh_internal.id
 }
 
+# Security group for HTTP (port 80)
+resource "openstack_networking_secgroup_v2" "http_access" {
+  name        = "http-access"
+  description = "[tf] Allow HTTP traffic on port 80"
+}
+
+# Rule: Allow ingress on port 80 from anywhere
+resource "openstack_networking_secgroup_rule_v2" "http_in" {
+  direction         = "ingress"
+  ethertype         = "IPv4"
+  protocol          = "tcp"
+  port_range_min    = 80
+  port_range_max    = 80
+  remote_ip_prefix  = "212.189.202.200/32"
+  security_group_id = openstack_networking_secgroup_v2.http_access.id
+}
+
 # Galaxy VM configuration
 resource "openstack_compute_instance_v2" "galaxy_vm" {
   name        	= "galaxy-private"
   image_name  	= "RockyLinux_9.5_20241118"
   flavor_name 	= "xlarge"
   key_pair    = openstack_compute_keypair_v2.vm_key.name
-  security_groups = ["default", openstack_networking_secgroup_v2.ssh_internal.name ]
+  security_groups = [
+    "default",
+    openstack_networking_secgroup_v2.ssh_internal.name,
+    openstack_networking_secgroup_v2.http_access.name
+  ]
 
   network {
     uuid = data.openstack_networking_network_v2.private_net.id
