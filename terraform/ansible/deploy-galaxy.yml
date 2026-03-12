@@ -1,6 +1,37 @@
 - hosts: all
   become: true
   become_user: root
+  vars:
+    postgresql_pg_hba_conf:
+      - type: local
+        database: all
+        user: all
+        method: trust
+
+    galaxy_root: /srv/galaxy
+    galaxy_server_dir: "{{ galaxy_root }}/server"
+    galaxy_venv_dir: "{{ galaxy_root }}/.venv"
+    galaxy_config_dir: "{{ galaxy_root }}/config"
+    galaxy_mutable_data_dir: "{{ galaxy_root }}/database"
+    galaxy_user: galaxy
+    galaxy_group: galaxy
+
+    galaxy_config_file: "{{ galaxy_config_dir }}/galaxy.yml"
+    galaxy_gravity_command: "{{ galaxy_venv_dir }}/bin/galaxyctl"
+    export_dir: /export
+
+    galaxy_config:
+      galaxy:
+        admin_users: admin@galaxy.laniakea.it
+        database_connection: "postgresql:///galaxy?host=/var/run/postgresql"
+        file_path: "{{ galaxy_mutable_data_dir }}/datasets"
+        new_file_path: "{{ galaxy_mutable_data_dir }}/tmp"
+        job_working_directory: "{{ galaxy_mutable_data_dir }}/jobs"
+        tool_dependency_dir: /export/tool_deps
+      gravity:
+        gunicorn:
+          bind: "0.0.0.0:4001"
+  
   pre_tasks:
     - name: '[EL] Install Packages for Rocky Linux'
       ansible.builtin.dnf:
