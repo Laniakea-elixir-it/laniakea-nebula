@@ -8,9 +8,8 @@ if ! command -v ansible >/dev/null; then
 	dnf install -y ansible git
 fi
  
-# Clone lanakea-nebula terraform script
-echo $PWD
-git clone https://github.com/Laniakea-elixir-it/ansible-playbooks.git
+# Clone lanakea ansible-playbooks for terraform script
+git clone https://github.com/Laniakea-elixir-it/ansible-playbooks.git /root/ansible-playbooks
 
 # Install Ansible roles
 export ANSIBLEPATH=/root/ansible-playbooks/galaxy
