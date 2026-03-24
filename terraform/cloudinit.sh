@@ -12,7 +12,7 @@ fi
 git clone https://github.com/Laniakea-elixir-it/ansible-playbooks.git
 
 # Install Ansible roles
-export ANSIBLEPATH=/root/ansible-playbooks
+export ANSIBLEPATH=/root/ansible-playbooks/galaxy
 export ROLESPATH=$ANSIBLEPATH/roles
 mkdir -p $ROLESPATH
 ansible-galaxy role install -p $ROLESPATH -r $ANSIBLEPATH/requirements.yml
