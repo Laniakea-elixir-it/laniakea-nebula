@@ -9,13 +9,13 @@ if ! command -v ansible >/dev/null; then
 fi
  
 # Clone lanakea-nebula terraform script
-git clone https://github.com/Laniakea-elixir-it/laniakea-nebula.git /root/laniakea-nebula
+git clone https://github.com/Laniakea-elixir-it/ansible-playbooks.git
 
 # Install Ansible roles
-export ANSIBLEPATH=/root/laniakea-nebula/terraform/ansible
+export ANSIBLEPATH=/root/ansible-playbooks
 export ROLESPATH=$ANSIBLEPATH/roles
 mkdir -p $ROLESPATH
 ansible-galaxy role install -p $ROLESPATH -r $ANSIBLEPATH/requirements.yml
  
 # Execute Ansible playbook
-ansible-playbook $ANSIBLEPATH/deploy-galaxy.yml -e @$ANSIBLEPATH/group_vars/galaxy.yml
+ansible-playbook $ANSIBLEPATH/galaxy.yml -e @$ANSIBLEPATH/group_vars/galaxy.yml -e "target_hosts=localhost"
