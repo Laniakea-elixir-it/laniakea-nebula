@@ -9,6 +9,7 @@ if ! command -v ansible >/dev/null; then
 fi
  
 # Clone lanakea-nebula terraform script
+echo $PWD
 git clone https://github.com/Laniakea-elixir-it/ansible-playbooks.git
 
 # Install Ansible roles
