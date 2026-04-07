@@ -4,10 +4,9 @@ set -euo pipefail
 ##############################
 #
 # Set application here
-# galaxy, rstudio, jupyterhub
 #
 ##############################
-export APPLICATION="jupyterhub"
+export APPLICATION="rstudio"
 
 # Install Ansible if not present
 if ! command -v ansible >/dev/null 2>&1; then

@@ -69,9 +69,9 @@ resource "openstack_networking_secgroup_rule_v2" "http_in" {
 }
 
 # Galaxy VM configuration
-resource "openstack_compute_instance_v2" "rstudio_vm" {
-  name        	= "rstudio-private"
-  image_name  	= "RockyLinux_9.5_20241118"
+resource "openstack_compute_instance_v2" "app_vm" {
+  name        	= "private-vm"
+  image_name  	= "Ubuntu-22.04-20260316"
   flavor_name 	= "xlarge"
   key_pair    = openstack_compute_keypair_v2.vm_key.name
   security_groups = [
@@ -85,5 +85,5 @@ resource "openstack_compute_instance_v2" "rstudio_vm" {
   }
 
 
-  user_data = file("${path.module}/deploy-rstudio.sh")
+  user_data = file("${path.module}/cloudinit.sh")
 }
